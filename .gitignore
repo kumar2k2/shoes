@@ -4,3 +4,17 @@ node_modules
 #package-lock-json
 package-lock.json
 
+# yarn.lock
+yarn.lock
+
+#coverage
+coverage
+
+#nyc_output
+.nyc_output
+
+#vscode
+.vscode
+
+# Optional npm cache directory
+.npm

@@ -1,0 +1,19 @@
+language: node_js
+node_js: node
+env:
+  global:
+    - CC_TEST_REPORTER_ID=9a7e8ac14b541b70f1fb3dd81ef268c58c762307f5dc5ea439ad33a0fcd1e7b2
+cache:
+  directories:
+    - node_modules
+services:
+  - mongodb
+script:
+   - npm install 
+   - npm test
+before_script:
+  - sleep 15
+  - mongo shoesTest --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+
+after_success:
+  - npm run coverage
