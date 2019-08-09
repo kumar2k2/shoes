@@ -4,7 +4,7 @@
   "description": "online store for selling shoes",
   "main": "app.js",
   "scripts": {
-    "test": "NODE_ENV=test CI=true nyc --reporter=html --reporter=text mocha --timeout 150000 --require babel-register --require babel-polyfill src/Database/Drop src/Test/* --exit",
+    "test": "NODE_ENV=test CI=true nyc --reporter=html --reporter=text mocha --timeout 10000 --require babel-register --require babel-polyfill src/Test/* --exit",
     "start": "node App",
     "dev": "nodemon --require babel-register --require babel-polyfill App",
     "coverage": "nyc --reporter=lcov --reporter=text-lcov npm test"
