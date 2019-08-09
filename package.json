@@ -28,7 +28,7 @@
     "test": "NODE_ENV=test CI=true nyc --reporter=html --reporter=text mocha --timeout 150000 --require babel-register src/Test/*",
     "start": "node server.js",
     "dev": "nodemon App",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov npm test"
   },
   "repository": {
     "type": "git",
