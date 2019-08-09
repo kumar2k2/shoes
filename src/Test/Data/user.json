@@ -1,0 +1,12 @@
+{
+    "signup":{
+        "username": "gracian",
+        "email":"gracian2020@gmail.com",
+        "password":"godisgood"
+    },
+    "emptyInput":{
+        "username": "",
+        "email": "",
+        "password": ""
+    }
+}
