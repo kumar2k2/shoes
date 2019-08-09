@@ -8,5 +8,9 @@
         "username": "",
         "email": "",
         "password": ""
+    },
+    "emailNotFound":{
+        "email": "notfound@gmail.com",
+        "password": "godisgood"
     }
 }

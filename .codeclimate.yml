@@ -1,4 +1,4 @@
 ## other configuration excluded from example...
 exclude_patterns:
-- "src/Test/*"
+- "**/Test/*"
 - "**/*.rb"

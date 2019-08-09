@@ -9,12 +9,14 @@ cache:
 services:
   - mongodb
 script:
-   - npm install 
-   - npm test
+  - npm install
+  - npm test
 before_script:
   - sleep 15
   - mongo shoesTest --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
-
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 after_success:
   - npm run coverage
 
