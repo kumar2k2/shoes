@@ -1,8 +1,8 @@
 import User from '../Models/User';
 import {
-  generateHashPassword,
+  generateHashPassword, generateToken, generateComparePassword,
 } from '../Helpers/Generate';
-import { validateInput } from '../Helpers/User';
+import { validateInput, validateSignin } from '../Helpers/User';
 
 
 class UserCtrl {
@@ -27,6 +27,32 @@ class UserCtrl {
           username: save.username,
         },
       });
+    } catch (error) {
+      return res.status(500).json({ error: 'sorry something wrong please try again later.' });
+    }
+  }
+
+  // signin
+  async SignIn(req, res) {
+    const { errors, isValid } = validateSignin(req.body);
+    if (!isValid) {
+      return res.status(400).json({ errors });
+    }
+    try {
+      const { email, password } = req.body;
+      const verifyEmail = await User.findOne({ email });
+      const errorMessage = 'email and password you entered did not match our records.';
+      if (!verifyEmail) return res.status(404).json({ error: errorMessage });
+      const compare = generateComparePassword(password, verifyEmail.password);
+      if (compare) {
+        const payload = {
+          id: verifyEmail.id,
+          username: verifyEmail.username,
+        };
+        const token = generateToken(payload);
+        return res.status(200).json({ message: `welcome ${verifyEmail.username}`, token });
+      }
+      return res.status(404).json({ error: errorMessage });
     } catch (error) {
       return res.status(500).json({ error: 'sorry something wrong please try again later.' });
     }
