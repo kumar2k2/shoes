@@ -1,8 +1,11 @@
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import passport from 'passport';
 
 import Routes from './src/Routes/Index';
+// middleware
+import { passportJWT } from './src/Middlewares/Passport';
 
 const App = express();
 const Port = process.env.PORT || 5000;
@@ -15,6 +18,9 @@ App.use(bodyParser.json());
 // morgan
 App.use(morgan('dev'));
 
+// config passport
+App.use(passport.initialize());
+passportJWT(passport);
 // config routes
 App.use(Routes);
 

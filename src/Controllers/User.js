@@ -57,6 +57,17 @@ class UserCtrl {
       return res.status(500).json({ error: 'sorry something wrong please try again later.' });
     }
   }
+
+  async currentProfile(req, res) {
+    const { username, email, avatar } = req.user;
+    return res.json({
+      profile: {
+        username,
+        email,
+        avatar,
+      },
+    });
+  }
 }
 
 export default new UserCtrl();
