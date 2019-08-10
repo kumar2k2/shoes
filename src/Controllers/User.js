@@ -59,7 +59,14 @@ class UserCtrl {
   }
 
   async currentProfile(req, res) {
-    return res.json({ user: req.user });
+    const { username, email, avatar } = req.user;
+    return res.json({
+      profile: {
+        username,
+        email,
+        avatar,
+      },
+    });
   }
 }
 
