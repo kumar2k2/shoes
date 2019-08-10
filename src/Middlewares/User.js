@@ -1,3 +1,4 @@
+import passport from 'passport';
 import User from '../Models/User';
 
 const verifyEmail = async (req, res, next) => {
@@ -9,6 +10,17 @@ const verifyEmail = async (req, res, next) => {
   next();
 };
 
+const verifyToken = (req, res, next) => {
+  passport.authenticate('jwt', { session: false }, (error, user) => {
+    const errorMessage = 'Whoops Unauthorized. You must signin to do that.';
+    if (!user || error) {
+      return res.status(401).json({ error: errorMessage });
+    }
+    req.user = user;
+    next();
+  })(req, res, next);
+};
 export {
   verifyEmail,
+  verifyToken,
 };

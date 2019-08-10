@@ -57,6 +57,10 @@ class UserCtrl {
       return res.status(500).json({ error: 'sorry something wrong please try again later.' });
     }
   }
+
+  async currentProfile(req, res) {
+    return res.json({ user: req.user });
+  }
 }
 
 export default new UserCtrl();
