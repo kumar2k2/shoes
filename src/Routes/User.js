@@ -13,4 +13,6 @@ App.post('/signin', User.SignIn);
 // get current User profile
 App.get('/profile', verifyToken, User.currentProfile);
 
+// PUT update password
+App.put('/password', verifyToken, User.updatePassword);
 export default App;

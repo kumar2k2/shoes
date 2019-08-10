@@ -2,7 +2,7 @@ import User from '../Models/User';
 import {
   generateHashPassword, generateToken, generateComparePassword,
 } from '../Helpers/Generate';
-import { validateInput, validateSignin } from '../Helpers/User';
+import { validateInput, validateSignin, validatePassword } from '../Helpers/User';
 
 
 class UserCtrl {
@@ -67,6 +67,30 @@ class UserCtrl {
         avatar,
       },
     });
+  }
+
+  async updatePassword(req, res) {
+    const { errors, isValid } = validatePassword(req.body);
+    if (!isValid) {
+      return res.status(400).json({ errors });
+    }
+    try {
+      const { password, _id } = req.user;
+      const { recentpassword, newpassword } = req.body;
+      const compare = generateComparePassword(recentpassword, password);
+      const errorMessage = 'recent password did not match.';
+      if (!compare) {
+        return res.status(409).json({ error: errorMessage });
+      }
+      await User.updateOne({ _id }, {
+        $set: {
+          password: generateHashPassword(newpassword),
+        },
+      });
+      return res.status(200).json({ message: 'Your password was changed.' });
+    } catch (error) {
+      return res.status(500).json({ error: 'sorry something wrong please try again later.' });
+    }
   }
 }
 

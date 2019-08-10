@@ -1,7 +1,9 @@
 import chai, { expect } from 'chai';
 import chaiHTTP from 'chai-http';
 import App from '../../App';
-import { signup, emptyInput, emailNotFound } from './Data/user.json';
+import {
+  signup, emptyInput, emailNotFound, emptyPassword, passwordNotMatch, passwordMatches,
+} from './Data/user.json';
 import Drop from '../Database/Drop';
 
 chai.use(chaiHTTP);
@@ -56,5 +58,27 @@ describe('User endpoints', () => {
     });
     expect(res.status).to.equal(200);
   });
+
+  // change password
+  it('/PUT should not let user change password when his not authenticated', async () => {
+    const res = await chai.request(App).put('/api/users/password');
+    expect(res.status).to.equal(401);
+  });
+  it('/PUT should not let user to change password when it has empty field', async () => {
+    const res = await chai.request(App).put('/api/users/password')
+      .set({ Authorization: token }).send(emptyPassword);
+    expect(res.status).to.equal(400);
+  });
+  it('/PUT should not let user to change password when recent password not match', async () => {
+    const res = await chai.request(App).put('/api/users/password')
+      .set({ Authorization: token }).send(passwordNotMatch);
+    expect(res.status).to.equal(409);
+    expect(res.body).to.has.property('error');
+  });
   //
+  it('/PUT should allow user to update password', async () => {
+    const res = await chai.request(App).put('/api/users/password')
+      .set({ Authorization: token }).send(passwordMatches);
+    expect(res.status).to.equal(200);
+  });
 });
