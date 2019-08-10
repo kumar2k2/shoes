@@ -2,7 +2,9 @@ import User from '../Models/User';
 import {
   generateHashPassword, generateToken, generateComparePassword,
 } from '../Helpers/Generate';
-import { validateInput, validateSignin, validatePassword } from '../Helpers/User';
+import {
+  validateInput, validateSignin, validatePassword, validateUsername,
+} from '../Helpers/User';
 
 
 class UserCtrl {
@@ -14,7 +16,7 @@ class UserCtrl {
     try {
       const { username, email, password } = req.body;
       const newUser = new User({
-        username,
+        username: username.toLowerCase(),
         email,
         password: generateHashPassword(password),
       });
@@ -88,6 +90,26 @@ class UserCtrl {
         },
       });
       return res.status(200).json({ message: 'Your password was changed.' });
+    } catch (error) {
+      return res.status(500).json({ error: 'sorry something wrong please try again later.' });
+    }
+  }
+
+  // update username
+  async updateUsername(req, res) {
+    const { errors, isValid } = validateUsername(req.body);
+    const { _id } = req.user;
+    const { username } = req.body;
+    if (!isValid) {
+      return res.status(400).json({ errors });
+    }
+    try {
+      await User.updateOne({ _id }, {
+        $set: {
+          username: username.toLowerCase(),
+        },
+      });
+      return res.status(200).json({ message: 'profile\'s username saved.' });
     } catch (error) {
       return res.status(500).json({ error: 'sorry something wrong please try again later.' });
     }

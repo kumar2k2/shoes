@@ -2,9 +2,10 @@ import chai, { expect } from 'chai';
 import chaiHTTP from 'chai-http';
 import App from '../../App';
 import {
-  signup, emptyInput, emailNotFound, emptyPassword, passwordNotMatch, passwordMatches,
+  signup, emptyInput, emailNotFound, emptyPassword, passwordNotMatch,
+  passwordMatches, username, emptyUsername, signup1,
 } from './Data/user.json';
-import Drop from '../Database/Drop';
+import { Drop } from '../Database/Drop';
 
 chai.use(chaiHTTP);
 
@@ -17,6 +18,13 @@ describe('User endpoints', () => {
     const res = await chai.request(App)
       .post('/api/users/signup')
       .send(signup);
+    expect(res.status).to.equal(201);
+  });
+  // second user
+  it('/POST should allow user to create account', async () => {
+    const res = await chai.request(App)
+      .post('/api/users/signup')
+      .send(signup1);
     expect(res.status).to.equal(201);
   });
   it('/POST should not allow user to create account', async () => {
@@ -79,6 +87,27 @@ describe('User endpoints', () => {
   it('/PUT should allow user to update password', async () => {
     const res = await chai.request(App).put('/api/users/password')
       .set({ Authorization: token }).send(passwordMatches);
+    expect(res.status).to.equal(200);
+  });
+
+  // change username
+  it('/PUT should not let user change username when he/she is not authenticated', async () => {
+    const res = await chai.request(App).put('/api/users/username');
+    expect(res.status).to.equal(401);
+  });
+  it('/PUT should not let user change his username when there is empty field', async () => {
+    const res = await chai.request(App).put('/api/users/username')
+      .set({ Authorization: token }).send(emptyUsername);
+    expect(res.status).to.equal(400);
+  });
+  it('/PUT should not let user change his username when its already exist', async () => {
+    const res = await chai.request(App).put('/api/users/username')
+      .set({ Authorization: token }).send(signup1);
+    expect(res.status).to.equal(409);
+  });
+  it('/PUT should let user change his username', async () => {
+    const res = await chai.request(App).put('/api/users/username')
+      .set({ Authorization: token }).send(username);
     expect(res.status).to.equal(200);
   });
 });

@@ -50,8 +50,22 @@ const validatePassword = (data) => {
     isValid: Object.keys(errors).length === 0,
   };
 };
+const validateUsername = (data) => {
+  const errors = {};
+  if (Validator.isEmpty(data.username)) {
+    errors.username = 'This field is required.';
+  }
+  if ((!Validator.isLength(data.username, { min: 6 }))) {
+    errors.username = 'This field must be more than 6 characters';
+  }
+  return {
+    errors,
+    isValid: Object.keys(errors).length === 0,
+  };
+};
 export {
   validateInput,
   validateSignin,
   validatePassword,
+  validateUsername,
 };

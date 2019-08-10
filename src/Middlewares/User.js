@@ -20,7 +20,20 @@ const verifyToken = (req, res, next) => {
     next();
   })(req, res, next);
 };
+
+const verifyUsername = async (req, res, next) => {
+  const username = req.body.username.toLowerCase();
+  const { _id } = req.user;
+  const verify = await User.find({ _id: { $ne: _id } });
+  // loop
+  const check = verify.find(user => user.username === username);
+  if (check) {
+    return res.status(409).json({ username: 'this username is not available try another.' });
+  }
+  return next();
+};
 export {
   verifyEmail,
   verifyToken,
+  verifyUsername,
 };

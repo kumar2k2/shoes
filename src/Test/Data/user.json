@@ -4,6 +4,11 @@
     "email": "gracian2020@gmail.com",
     "password": "godisgood"
   },
+  "signup1": {
+    "username": "john",
+    "email": "johnDoe@gmail.com",
+    "password": "godisgood"
+  },
   "emptyInput": {
     "username": "",
     "email": "",
@@ -24,8 +29,14 @@
     "recentpassword": "kigalirwanda",
     "newpassword": "kigalama"
   },
-  "passwordMatches":{
-      "recentpassword": "godisgood",
+  "passwordMatches": {
+    "recentpassword": "godisgood",
     "newpassword": "godisgood"
+  },
+  "username": {
+    "username": "gracian"
+  },
+  "emptyUsername": {
+    "username": ""
   }
 }
