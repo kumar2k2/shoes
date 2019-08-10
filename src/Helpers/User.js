@@ -12,6 +12,9 @@ const validateInput = (data) => {
   if (Validator.isEmpty(data.password)) {
     errors.password = 'This field is required.';
   }
+  if (!Validator.isLength(data.password, { min: 6 })) {
+    errors.password = 'This field must be more than 6 characters';
+  }
 
   return {
     errors,
