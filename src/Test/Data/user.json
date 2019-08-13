@@ -1,16 +1,42 @@
 {
-    "signup":{
-        "username": "gracian",
-        "email":"gracian2020@gmail.com",
-        "password":"godisgood"
-    },
-    "emptyInput":{
-        "username": "",
-        "email": "",
-        "password": ""
-    },
-    "emailNotFound":{
-        "email": "notfound@gmail.com",
-        "password": "godisgood"
-    }
+  "signup": {
+    "username": "gracian",
+    "email": "gracian2020@gmail.com",
+    "password": "godisgood"
+  },
+  "signup1": {
+    "username": "john",
+    "email": "johnDoe@gmail.com",
+    "password": "godisgood"
+  },
+  "emptyInput": {
+    "username": "",
+    "email": "",
+    "password": ""
+  },
+  "emailNotFound": {
+    "email": "notfound@gmail.com",
+    "password": "godisgood"
+  },
+  "password": {
+    "newpassword": "hacker@1"
+  },
+  "emptyPassword": {
+    "recentpassword": "",
+    "newpassword": ""
+  },
+  "passwordNotMatch": {
+    "recentpassword": "kigalirwanda",
+    "newpassword": "kigalama"
+  },
+  "passwordMatches": {
+    "recentpassword": "godisgood",
+    "newpassword": "godisgood"
+  },
+  "username": {
+    "username": "gracian"
+  },
+  "emptyUsername": {
+    "username": ""
+  }
 }

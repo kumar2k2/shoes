@@ -14,4 +14,6 @@ const Drop = (done) => {
   });
 };
 
-export default Drop;
+export {
+  Drop,
+};
